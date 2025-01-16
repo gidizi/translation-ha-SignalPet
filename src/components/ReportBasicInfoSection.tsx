@@ -4,6 +4,7 @@ import ContactInfoSection from "./ContactInfoSection";
 import ParentDetailsSection from "./ParentDetailsSection";
 import ReportFindings from "./ReportFindings";
 import { reportBasicInfo } from "../utils/constants";
+import { useTranslation } from "react-i18next";
 
 const styles = {
     container: {
@@ -34,11 +35,12 @@ const styles = {
 };
 
 const ReportBasicInfoSection = () => {
+    const {t} = useTranslation()
     return (
         <div>
             <ReportSection
                 title={reportBasicInfo.reportTitle}
-                secondaryText="ID: 91"
+                secondaryText={reportBasicInfo.id+": 91"}
             >
                 <div style={styles.container}>
                     <div
@@ -49,13 +51,13 @@ const ReportBasicInfoSection = () => {
                         }}
                     >
                         <span style={styles.segmentTitle} translate="yes">
-                            {reportBasicInfo.service}:
+                            {t(reportBasicInfo.service)}:
                         </span>
                         <span style={styles.segmentContent}>SignalRAY</span>
                     </div>
                     <div style={styles.segmentContainer}>
                         <span style={styles.segmentTitle} translate="yes">
-                            {reportBasicInfo.date}:
+                            {t(reportBasicInfo.date)}:
                         </span>
                         <span style={styles.segmentContent}>01-01-1994</span>
                     </div>

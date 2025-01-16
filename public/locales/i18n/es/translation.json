@@ -1,0 +1,21 @@
+{
+  "Owner Name": "nombre del propietario",
+  "Patient Name": "nombre del paciente",
+  "Patient Id": "ID del paciente",
+  "Species": "especie",
+  "Breed": "raza",
+  "Gender": "género",
+  "Neutered": "esterilizado",
+  "Service": "Servicio",
+  "Date": "Fecha",
+  "Report": "Informe",
+  "Hospital Details": "Detalles del hospital",
+  "Patient Details": "Detalles del paciente",
+  "Abnormal Findings": "Hallazgos anormales",
+  "Normal Findings": "Hallazgos normales",
+  "Confidence": "Confianza",
+  "Instant Point-of-Care Radiology Results": "Resultados inmediatos de radiología",
+  "Loading...": "Cargando...",
+  "Additional Information": "Información adicional",
+  "Summary": "Resumen"
+}

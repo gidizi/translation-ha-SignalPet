@@ -7,6 +7,7 @@ export const reportBasicInfo = {
     abnormalFindingsTitle: "Abnormal Findings",
     normalFindingsTitle: "Normal Findings",
     confidenceTitle: "Confidence",
+    id:"ID"
 };
 
 export const reportHeader = {

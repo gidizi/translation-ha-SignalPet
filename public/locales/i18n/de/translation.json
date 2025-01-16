@@ -1,0 +1,22 @@
+{
+  "test": "test aaaaaa",
+  "Owner Name": "Besitzername",
+  "Patient Name": "Patientenname",
+  "Patient Id": "Patienten-ID",
+  "Species": "Art",
+  "Breed": "Rasse",
+  "Gender": "Geschlecht",
+  "Neutered": "kastriert",
+  "Service": "Dienstleistung",
+  "Date": "Datum",
+  "Report": "Bericht",
+  "Hospital Details": "Krankenhausdetails",
+  "Patient Details": "Patientendetails",
+  "Abnormal Findings": "Abnorme Befunde",
+  "Normal Findings": "Normale Befunde",
+  "Confidence": "Vertrauen",
+  "Instant Point-of-Care Radiology Results": "Sofortige Radiologieergebnisse",
+  "Loading...": "Wird geladen...",
+  "Additional Information": "Zusätzliche Informationen",
+  "Summary": "Zusammenfassung"
+}

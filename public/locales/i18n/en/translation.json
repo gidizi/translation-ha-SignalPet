@@ -1,0 +1,21 @@
+{
+  "Owner Name": "Owner Name",
+  "Patient Name": "Patient Name",
+  "Patient Id": "Patient Id",
+  "Species": "Species",
+  "Breed": "Breed",
+  "Gender": "Gender ",
+  "Neutered": "Neutered",
+  "Service": "Service",
+  "Date": "Date",
+  "Report": "Report",
+  "Hospital Details": "Hospital Details",
+  "Patient Details": "Patient Details",
+  "Abnormal Findings": "Abnormal Findings",
+  "Normal Findings": "Normal Findings",
+  "Confidence": "Confidence",
+  "Instant Point-of-Care Radiology Results": "Instant Point-of-Care Radiology Results",
+  "Loading...": "Loading...",
+  "Additional Information": "Additional Information",
+  "Summary": "Summary"
+}
