@@ -1,6 +1,6 @@
 import axios from "axios";
 
-//todo: use environemnt var for baseUrl
+//todo: use environemnt var for baseUrl conf
 const axiosInstance = axios.create({
   baseURL: "http://localhost:4000",
 });
