@@ -4,6 +4,7 @@ import { Checkbox2 } from "./ui/checkbox";
 import { type Finding, type Findings } from "../models/finding";
 import axiosInstance from "../api/axiosInstance";
 import { useTranslation } from "react-i18next";
+import { loadingText } from "../utils/constants";
 
 const styles = {
   gap3: {
@@ -48,11 +49,12 @@ const ReportFindings = ({
 }: ReportFindingsProps): JSX.Element => {
   const [findingsData, setFindingsData] = useState<Finding[]>(); //very explicit name mainly to separate from the orig var for easier review
 
-  const { i18n } = useTranslation();
+  const { t, i18n } = useTranslation();
 
   useEffect(() => {
     async function fetchFindings() {
       try {
+        setFindingsData([]);
         const randomTemporaryId = 91;
         const urlSubPath = isNormal ? "normal" : "abnormal";
         const findings = await axiosInstance.get(
@@ -77,7 +79,7 @@ const ReportFindings = ({
   //note: we disallowed the case of providing findings as a prop for now. we don't see any flow that uses it anyway as part of the tasks scope
   return (
     <div style={styles.gap3}>
-      {findingsData &&
+      {findingsData && findingsData.length != 0 ? (
         findingsData.map((finding) =>
           editable || !editable ? (
             <div key={finding.id} style={styles.smGap4}>
@@ -91,7 +93,10 @@ const ReportFindings = ({
           ) : (
             <></>
           )
-        )}
+        )
+      ) : (
+        <span>{t(loadingText)}</span>
+      )}
       <span></span>
     </div>
   );
