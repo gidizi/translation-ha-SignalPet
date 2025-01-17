@@ -59,24 +59,25 @@ According to this delicate balance we will choose our caching strategy
 ### Backend
 
 1.Separate the Libre dependency into a standalone project. (both for development and production)  
-2.Consider using memo for dynamic translation that repeats often.  
+2.Consider using memoization for dynamic translation that repeats often.  
 3.work with actual db, rather relational or non relational.  
-4.extract data into separate layer (repository).  
+4.extract data handling into separate layer (repository).  
 5.Add logging and monitoring mechanisms.  
-6.Authentication and authorization mechanism.
+6.Integrate with Authentication and authorization mechanism.
 
 ### Frontend
 
-1.Extract hook for listening to i18next language changes.
+1.Extract hook for keep tracking of i18next language changes.
 
 ## Task's Bonus points -
 
 1.Done.  
 2.Done.  
-3.Done - described as part of the system's architecture - some translations are manage on static files which auto updates.  
+3.Done - described as part of the system's architecture.
 4.Done.
 
 ## Bonus tools - how to initiate translation files quickly:
 
-npm run i18n:scan - Scans the project, and create translation files with all relevant words for each language.
-Unfortunately it works only with static values so it wasn't much effective in our case :)
+npm run i18n:scan - Scans the project, and create translation files with all relevant words for each language.  
+I used it in order to create initial static translation files.
+Note that it works only with static values.
