@@ -25,7 +25,7 @@ $ npm start
 
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
-## Described solution architecture
+## Solution architecture
 
 The project implements i18next library to manage languages.  
 For static content, it uses static translation files that are being lazy loaded with http call based on the current language.  
