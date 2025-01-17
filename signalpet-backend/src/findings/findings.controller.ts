@@ -1,4 +1,5 @@
-import { Controller, Get, Param } from '@nestjs/common';
+import { Controller, Get, Param, Query } from '@nestjs/common';
+import { HttpException, HttpStatus } from '@nestjs/common';
 import { FindingsService } from './findings.service';
 
 @Controller('findings')
@@ -6,12 +7,34 @@ export class FindingsController {
   constructor(private readonly findingsService: FindingsService) {}
 
   @Get('normal/:id')
-  getNormalFindingById(@Param('id') id: number) {
-    return this.findingsService.getNormalFindingById(Number(id));
+  async getNormalFindingById(
+    @Param('id') id: number,
+    @Query('lang') lang?: string,
+  ) {
+    try {
+      return await this.findingsService.getNormalFindingById(Number(id), lang);
+    } catch (error) {
+      console.error('Error fetching normal finding:', error.message);
+      throw new HttpException(
+        'Failed to fetch normal finding. Please try again later.',
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+    }
   }
 
   @Get('abnormal/:id')
-  getAbormalFindingById(@Param('id') id: number) {
-    return this.findingsService.getAbormalFindingById(Number(id));
+  async getAbormalFindingById(
+    @Param('id') id: number,
+    @Query('lang') lang?: string,
+  ) {
+    try {
+      return await this.findingsService.getAbormalFindingById(Number(id), lang);
+    } catch (error) {
+      console.error('Error fetching abnormal finding:', error.message);
+      throw new HttpException(
+        'Failed to fetch abnormal finding. Please try again later.',
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+    }
   }
 }

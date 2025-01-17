@@ -3,15 +3,17 @@ import * as fs from 'fs';
 import * as path from 'path';
 import { selectRandomObjects } from 'src/utils/objects';
 import { getRandomNumberInRange } from 'src/utils/numbers';
-import { Findings } from 'src/models/finding';
+import { Findings, FindingDTO } from 'src/models/finding';
 import { randomXrayFinding } from 'src/utils/strings';
+import { TranslationService } from 'src/translation/translation.service';
+import { convertToDto } from './findings.utils';
 
 @Injectable()
 export class FindingsService {
   public abnormalFindings: any[] = [];
   public normalFindings: any[] = [];
 
-  constructor() {
+  constructor(private readonly translationService: TranslationService) {
     this.loadAllData();
   }
 
@@ -58,13 +60,31 @@ export class FindingsService {
     });
   }
 
-  getNormalFindingById(id: number) {
-    //id will be used in an actual app when data isn't randomly generate
-    return this.getFindings(true, [0, 7], [0, 5]);
+  async getNormalFindingById(
+    id: number,
+    lang: string = 'en',
+  ): Promise<FindingDTO[]> {
+    //note: id will be used in an actual app when data isn't randomly generate
+    const findings = this.getFindings(true, [0, 7], [0, 5]);
+    const translatedNames = await this.translationService.batchTranslate(
+      findings.map((item) => item.name),
+      'en',
+      lang,
+    );
+    return convertToDto(findings, translatedNames);
   }
 
-  getAbormalFindingById(id: number) {
-    //id will be used in an actual app when data isn't randomly generate
-    return this.getFindings(false, [0, 7], [0, 5]);
+  async getAbormalFindingById(
+    id: number,
+    lang: string = 'en',
+  ): Promise<FindingDTO[]> {
+    //note: id will be used in an actual app when data isn't randomly generate
+    const findings = this.getFindings(false, [0, 7], [0, 5]);
+    const translatedNames = await this.translationService.batchTranslate(
+      findings.map((item) => item.name),
+      'en',
+      lang,
+    );
+    return convertToDto(findings, translatedNames);
   }
 }
