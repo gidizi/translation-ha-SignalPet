@@ -29,7 +29,7 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
 The project implements i18next library to manage languages.  
 For static content, it uses static translation files that are being lazy loaded with http call based on the current language.  
-It integrates with LibreTranslate engine on the server side to translate dynamic content delivered by the backend.
+It integrates with LibreTranslate engine on the server side to translate dynamic content delivered by the backend.  
 It uses the i18next internal state to keep track of the current language and triggers http calls which are fetching dynamic translated data based on that state.  
  It also uses i18next plugins to detect browser language and persist language preferation/selection.  
 Note: both i18n's static translations, and libre dynamic translation provide english language as a fallback in case of missing translation.
