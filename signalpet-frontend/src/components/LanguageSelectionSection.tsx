@@ -4,9 +4,16 @@ import axiosInstance from "../api/axiosInstance";
 import axios from "axios";
 
 const LanguageSelectionSection = () => {
-  //todo consider getting value from context or local storage (although might not be on same format)
   const [langInput, setLangInput] = useState("");
   const { i18n } = useTranslation();
+
+  const styles = {
+    container: {
+      paddingTop: "0.5rem",
+      display: "flex",
+      gap: "0.25rem",
+    },
+  };
 
   //notes:
   //this function makes preliminary request which reduces performance.
@@ -42,7 +49,7 @@ const LanguageSelectionSection = () => {
   }
 
   return (
-    <div>
+    <div style={{ ...styles.container }}>
       <span>Select Language: </span>
       <input
         type="text"
