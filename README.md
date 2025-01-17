@@ -42,6 +42,12 @@ Then use i18next-fs-backend plugin to load static translations faster directly f
 Then, use [saveMissing](https://www.i18next.com/overview/configuration-options) mechanism, and a matching backend service that updates missing keys on translation files, and providing their translated value via libre - thus acheive translation updates during runetime.
 Both for newly added static keys, and semi-dinamic key such as patient detail titles.
 
+Note: Regarding caching techniques for large list of repeating values, such as medicalTerms, we need to consider several factors:
+1.what is the length of the list
+2.what will be the cost of translating them on runtime
+3.how long is it "acceptable" for user to wait on production for a large translation file that will be loading.
+According to this delicate balance we will choose our caching strategy
+
 ## Further (mixed) production suggestions:
 
 ### General
@@ -58,6 +64,10 @@ Both for newly added static keys, and semi-dinamic key such as patient detail ti
 4.extract data into separate layer (repository).  
 5.Add logging and monitoring mechanisms.  
 6.Authentication and authorization mechanism.
+
+### Frontend
+
+1.Extract hook for listening to i18next language changes.
 
 ## Task's Bonus points -
 

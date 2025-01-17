@@ -17,6 +17,25 @@ export class FindingsService {
     this.loadAllData();
   }
 
+  private loadAllData() {
+    const fileMapping = {
+      abnormalFindings: 'fetchAbnormalFindings.json', // todo: change the names after the logic will work
+      normalFindings: 'fetchNormalFindings.json',
+    };
+
+    Object.entries(fileMapping).forEach(([variableName, fileName]) => {
+      const filePath = path.join(__dirname, '..', 'data', fileName);
+      if (fs.existsSync(filePath)) {
+        const data = fs.readFileSync(filePath, 'utf8');
+        this[variableName] = JSON.parse(data);
+      } else {
+        console.warn(
+          `File ${fileName} at ${filePath} not found. Skipping initialization for ${variableName}.`,
+        );
+      }
+    });
+  }
+
   public getFindings(
     isNormal: boolean,
     quantityRange: [number, number],
@@ -39,25 +58,6 @@ export class FindingsService {
     }
 
     return localFindings;
-  }
-
-  private loadAllData() {
-    const fileMapping = {
-      abnormalFindings: 'fetchAbnormalFindings.json', // todo: change the names after the logic will work
-      normalFindings: 'fetchNormalFindings.json',
-    };
-
-    Object.entries(fileMapping).forEach(([variableName, fileName]) => {
-      const filePath = path.join(__dirname, '..', 'data', fileName);
-      if (fs.existsSync(filePath)) {
-        const data = fs.readFileSync(filePath, 'utf8');
-        this[variableName] = JSON.parse(data);
-      } else {
-        console.warn(
-          `File ${fileName} at ${filePath} not found. Skipping initialization for ${variableName}.`,
-        );
-      }
-    });
   }
 
   async getNormalFindingById(
