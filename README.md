@@ -1,67 +1,72 @@
-### `npm start`
+## Project setup
 
-Runs the app in the development mode.\
+This project consist of 3 part that have to run simultaniously.
+
+### Translation engine
+
+Run [LibreTranslate machine](https://github.com/LibreTranslate/LibreTranslate?tab=readme-ov-file).  
+ Run the project with the following configuration "–load-only en,es,de,pt,fr –update-models" and on port 5000 (default)
+
+### Backend - Nest.js
+
+```bash
+cd signalpet-backend
+$ npm install
+$ npm start
+```
+
+### Frontend - React.js
+
+```bash
+cd signalpet-frontend
+$ npm install
+$ npm start
+```
+
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+## Described solution architecture
 
-##Described solution architecture
-The project implements i18next library to manage static by usinng i18next library.  
-It makes a lazy http call to get only the relevant language files on language change.
+The project implements i18next library to manage languages.  
+For static content, it uses static translation files that are being lazy loaded with http call based on the current language.  
+It uses LibreTranslate engine on the server side to translate dynamic content delivered by the backend.
+Moreover, it uses the i18next to manage the current language, and triggers http calls to fetch dynamic translated data, based on its language state.  
+ It also uses i18next plugins to detect browser language and persist language preferation/selection.  
+Note: both i18n's static translations, and libre dynamic translation provide english language as a fallback in case of missing translation.
 
-##Steps when adding new language or dynamic values:
-if adding a new language - add the new language to the lngs attr at i18next-scanner.config.js  
-npm run i18n:scan - files with all relevant keys for each language will be generate (i.e public\locales\i18n\es\extractedKeysFromText.json)  
-Change the new languages file name and translate the values (can be done with LibreTranslate), or for existing languages just add the missing key to the relevant translation files.  
-note a: The functionality is still limited and misses dynamicly extracted fields.
-note: This method can be improved, view futher improvement tips about saveMissing config.
+### Architecture (production) suggested improvement
 
-additions:
+1.Use next.js to render initial version from server (ssr).  
+Then use i18next-fs-backend plugin to load static translations faster directly from FS.  
+2.Host the static translation files on the backend.  
+Then, use [saveMissing](https://www.i18next.com/overview/configuration-options) mechanism, and a matching backend service that updates missing keys on translation files, and providing their translated value via libre - thus acheive translation updates during runetime.
+Both for newly added static keys, and semi-dinamic key such as patient detail titles.
 
-write about initiating the libre
+## Further (mixed) production suggestions:
 
-prod:
-libre server at prod
-update translations - https://www.i18next.com/how-to/extracting-translations
+### General
 
-//todo: fallbacklng iii18n config
-//todo: i18 browser language detecotor library and use it
-//interpolation for jsx, note escaping
-//theres a function on min 15:30 to change language with i18n library
-//he installed i18next-http-backend (and talked about i18next-fs-backend for server side so read about it) - it seems that even the basic backend library aims to make http request to translator to missing translations but read more about it
-//react suspense
+1.make sure language codes in i18 and libre are fully synced for future use cases.  
+2.Use further [caching mechanisem](https://www.i18next.com/how-to/caching).  
+3.Set configuration file for each environment.
 
-//convert stuff to nextjs, adjust the i18 libraries
-//load the files at ssr, and then use them at api endpoint for language change.
-//note that also ssr might have to translate according to use preference
+### Backend
 
-//note: 15:49 - the manual selected language is persistd at the local storage
-//make sure language codes in i18 and libre are sync
-//some caching guide https://www.i18next.com/how-to/caching
+1.Separate the Libre dependency into a standalone project. (both for development and production)  
+2.Consider using memo for dynamic translation that repeats often.  
+3.work with actual db, rather relational or non relational.  
+4.extract data into separate layer (repository).  
+5.Add logging and monitoring mechanisms.  
+6.Authentication and authorization mechanism.
 
-Further production tasks:
-
-1.Translation fallbacks - https://www.i18next.com/how-to/backend-fallback
-2.use i18next-fs-backend to load files during ssr directly from the backend
-3.Activate the saveMissing config, to notify our backend about missing keys. Then define logic at the backend to create these keys and get their translate via libreTranslate
-4.Integrae existing translation files into backend server
-5.implement the logic that updates translation file on saveMissing event/call from i18next
-6.migrate to next js 7. it worth try to find some method to sync between i18n supportedlngs lists and the libre configuration
-
-Areas that need further consideration:
-1.summarySentenceStructures - The text template is being translated (in attempt saving unnecessary calculations) and then the injected terms are being translated separately. verify that this methodology works well enough.
-
-//current steps:
-1.figure out how to make the relevant translation without much manual work - VVV
-2.convert to nextjs - or alternatively create a nest project - current step
-קראתי מה שכתוב במחברת ומסתמן ממש שאני רוצה להרים פרויקט נפרד לבק שזה מה שנאמר בראיון כי אמרו בכל שפה שנח ואז הכוונה לא לנסט
-
-backend project - describe how would we handle saveMissing functionality, maybe just high level (include holding description files at be)
-
-Bonus points -
+## Task's Bonus points -
 
 1.Done.  
 2.Done.  
 3.Done - described as part of the system's architecture - some translations are manage on static files which auto updates.  
 4.Done.
+
+## Bonus tools - how to initiate translation files quickly:
+
+npm run i18n:scan - Scans the project, and create translation files with all relevant words for each language.
+Unfortunately it works only with static values so it wasn't much effective in our case :)
