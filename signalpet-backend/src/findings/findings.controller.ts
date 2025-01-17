@@ -6,6 +6,7 @@ import { FindingsService } from './findings.service';
 export class FindingsController {
   constructor(private readonly findingsService: FindingsService) {}
 
+  //todo: extract shared logic of normal/abnormal controllers
   @Get('normal/:id')
   async getNormalFindingById(
     @Param('id') id: number,
@@ -15,6 +16,16 @@ export class FindingsController {
       return await this.findingsService.getNormalFindingById(Number(id), lang);
     } catch (error) {
       console.error('Error fetching normal finding:', error.message);
+      if (
+        error.response &&
+        error.response.status === 400 &&
+        error.response.data?.error?.includes('is not supported')
+      ) {
+        throw new HttpException(
+          `The requested language is not supported.`,
+          HttpStatus.BAD_REQUEST,
+        );
+      }
       throw new HttpException(
         'Failed to fetch normal finding. Please try again later.',
         HttpStatus.INTERNAL_SERVER_ERROR,
@@ -22,6 +33,7 @@ export class FindingsController {
     }
   }
 
+  //todo: extract extacting shared logic of normal/abnormal controllers
   @Get('abnormal/:id')
   async getAbnormalFindingById(
     @Param('id') id: number,
@@ -34,6 +46,16 @@ export class FindingsController {
       );
     } catch (error) {
       console.error('Error fetching abnormal finding:', error.message);
+      if (
+        error.response &&
+        error.response.status === 400 &&
+        error.response.data?.error?.includes('is not supported')
+      ) {
+        throw new HttpException(
+          `The requested language is not supported.`,
+          HttpStatus.BAD_REQUEST,
+        );
+      }
       throw new HttpException(
         'Failed to fetch abnormal finding. Please try again later.',
         HttpStatus.INTERNAL_SERVER_ERROR,

@@ -75,10 +75,7 @@ export class FindingsService {
       return convertToDto(findings, translatedNames);
     } catch (error) {
       console.error('Error in getNormalFindingById:', error.message);
-      throw new HttpException(
-        'Failed to fetch normal findings. Please try again later.',
-        HttpStatus.INTERNAL_SERVER_ERROR,
-      );
+      throw error;
     }
   }
 
@@ -97,10 +94,7 @@ export class FindingsService {
       return convertToDto(findings, translatedNames);
     } catch (error) {
       console.error('Error in getNormalFindingById:', error.message);
-      throw new HttpException(
-        'Failed to fetch abnormal findings. Please try again later.',
-        HttpStatus.INTERNAL_SERVER_ERROR,
-      );
+      throw error;
     }
   }
 }

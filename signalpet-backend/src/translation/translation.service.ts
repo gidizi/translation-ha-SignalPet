@@ -32,10 +32,7 @@ export class TranslationService {
 
       // In case the entire request failed, we could potentially return the english fallback.
       //as a design decision, and because the user can choose EN at the UI, I have decided to throw an error in order notify the user,
-      throw new HttpException(
-        'Failed to translate texts. Please try again later or contanct the support team.',
-        HttpStatus.INTERNAL_SERVER_ERROR,
-      );
+      throw error;
     }
   }
 }
