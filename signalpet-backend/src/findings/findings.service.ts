@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
 import * as fs from 'fs';
 import * as path from 'path';
 import { selectRandomObjects } from 'src/utils/objects';
@@ -65,26 +65,42 @@ export class FindingsService {
     lang: string = 'en',
   ): Promise<FindingDTO[]> {
     //note: id will be used in an actual app when data isn't randomly generate
-    const findings = this.getFindings(true, [0, 7], [0, 5]);
-    const translatedNames = await this.translationService.batchTranslate(
-      findings.map((item) => item.name),
-      'en',
-      lang,
-    );
-    return convertToDto(findings, translatedNames);
+    try {
+      const findings = this.getFindings(true, [0, 7], [0, 5]);
+      const translatedNames = await this.translationService.batchTranslate(
+        findings.map((item) => item.name),
+        'en',
+        lang,
+      );
+      return convertToDto(findings, translatedNames);
+    } catch (error) {
+      console.error('Error in getNormalFindingById:', error.message);
+      throw new HttpException(
+        'Failed to fetch normal findings. Please try again later.',
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+    }
   }
 
-  async getAbormalFindingById(
+  async getAbnormalFindingById(
     id: number,
     lang: string = 'en',
   ): Promise<FindingDTO[]> {
     //note: id will be used in an actual app when data isn't randomly generate
-    const findings = this.getFindings(false, [0, 7], [0, 5]);
-    const translatedNames = await this.translationService.batchTranslate(
-      findings.map((item) => item.name),
-      'en',
-      lang,
-    );
-    return convertToDto(findings, translatedNames);
+    try {
+      const findings = this.getFindings(false, [0, 7], [0, 5]);
+      const translatedNames = await this.translationService.batchTranslate(
+        findings.map((item) => item.name),
+        'en',
+        lang,
+      );
+      return convertToDto(findings, translatedNames);
+    } catch (error) {
+      console.error('Error in getNormalFindingById:', error.message);
+      throw new HttpException(
+        'Failed to fetch abnormal findings. Please try again later.',
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+    }
   }
 }

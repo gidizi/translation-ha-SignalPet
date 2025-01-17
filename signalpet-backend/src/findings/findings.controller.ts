@@ -23,12 +23,15 @@ export class FindingsController {
   }
 
   @Get('abnormal/:id')
-  async getAbormalFindingById(
+  async getAbnormalFindingById(
     @Param('id') id: number,
     @Query('lang') lang?: string,
   ) {
     try {
-      return await this.findingsService.getAbormalFindingById(Number(id), lang);
+      return await this.findingsService.getAbnormalFindingById(
+        Number(id),
+        lang,
+      );
     } catch (error) {
       console.error('Error fetching abnormal finding:', error.message);
       throw new HttpException(
