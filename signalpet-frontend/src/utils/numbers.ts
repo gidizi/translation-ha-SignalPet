@@ -1,4 +1,3 @@
-//todo: delete once BE works
 export const getRandomNumberInRange = (start: number, end: number): number => {
   // Ensure start is smaller than end
   if (start > end) {

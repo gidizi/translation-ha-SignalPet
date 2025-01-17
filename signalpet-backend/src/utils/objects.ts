@@ -1,4 +1,3 @@
-// todo: delete if not in use
 export function shuffleArray<T>(array: T[]): T[] {
   const shuffledArray = [...array];
   for (let i = shuffledArray.length - 1; i > 0; i--) {

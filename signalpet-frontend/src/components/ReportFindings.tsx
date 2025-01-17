@@ -158,7 +158,6 @@ const ReportFinding = ({
           }}
           translate="yes"
         >{`${finding.name}`}</div>
-        {/* todo: should be translated */}
       </div>
       <div style={styles.gap25}>
         <Pill filled={true} isNormal={isNormal} checked={checked} />

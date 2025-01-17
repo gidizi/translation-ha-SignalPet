@@ -1,4 +1,3 @@
-//todo: remove parts that moved to be
 export type confidence = 1 | 2 | 3 | 4;
 
 export interface FindingEntry {

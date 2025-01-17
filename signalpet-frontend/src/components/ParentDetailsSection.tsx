@@ -35,6 +35,7 @@ const ParentDetailsSection = (props: ParentDetailsSectionInterface) => {
 
   useEffect(() => {
     setTimeout(() => {
+      //note: this functionality needs to move to the back. it doesn't requires translation though so it wasn't significant for the task
       setDetails(require("../fetches/fetchPatientDetails.json")[patientId]);
     }, getRandomNumberInRange(200, 1800));
   });
