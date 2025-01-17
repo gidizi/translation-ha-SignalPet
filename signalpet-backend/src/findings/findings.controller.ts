@@ -5,8 +5,13 @@ import { FindingsService } from './findings.service';
 export class FindingsController {
   constructor(private readonly findingsService: FindingsService) {}
 
-  @Get(':id')
-  getFindingById(@Param('id') id: number) {
-    return this.findingsService.getFindingById(Number(id));
+  @Get('normal/:id')
+  getNormalFindingById(@Param('id') id: number) {
+    return this.findingsService.getNormalFindingById(Number(id));
+  }
+
+  @Get('abnormal/:id')
+  getAbormalFindingById(@Param('id') id: number) {
+    return this.findingsService.getAbormalFindingById(Number(id));
   }
 }
