@@ -198,6 +198,7 @@ export const randomXrayFinding = (isNormal: boolean): Finding => {
           };
 };
 
+//todo: take direct care of this one
 export const summarySentenceStructures = [
     "The x-ray analysis revealed %s in the %s region, indicating possible %s.",
     "An abnormal %s was detected during the x-ray analysis, suggesting %s in the %s area.",
@@ -233,3 +234,7 @@ export function generateXrayAnalysisSummary(): string {
     // Join sentences to form a paragraph
     return sentences.join(" ");
 }
+
+export function isString(value: unknown): value is string {
+    return typeof value === 'string';
+  }
