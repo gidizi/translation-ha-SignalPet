@@ -195,7 +195,7 @@ export const summarySentenceStructures = [
   'An area of concern highlighted in the x-ray was a %s near the %s, suggesting %s.',
 ];
 
-export function generateXrayAnalysisSummary(): string {
+export function generateXrayAnalysisSummary(): string[] {
   // Array of sentence structures for the summary
 
   // Randomly select sentence structure and medical terms
@@ -218,8 +218,8 @@ export function generateXrayAnalysisSummary(): string {
   const numberOfSentences = Math.floor(Math.random() * 4) + 1;
   const sentences = new Array(numberOfSentences).fill(summary);
 
-  // Join sentences to form a paragraph
-  return sentences.join(' ');
+  // note: I change sentences concatiniation, because I want modularity for future caching + it might provide better translations
+  return sentences;
 }
 
 export function isString(value: unknown): value is string {

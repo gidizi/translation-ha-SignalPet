@@ -73,7 +73,7 @@ const ReportFindings = ({
     return () => {
       i18n.off("languageChanged", fetchFindings);
     };
-  }, [i18n]); // Dependency on i18n instance
+  }, [i18n]);
 
   // findings = findings ? findings : getFindings(isNormal, [0, 7], [0, 5]);
   //note: we disallowed the case of providing findings as a prop for now. we don't see any flow that uses it anyway as part of the tasks scope
