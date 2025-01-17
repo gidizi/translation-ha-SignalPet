@@ -2,10 +2,8 @@
 import React, { useState, useEffect } from "react";
 import { Checkbox2 } from "./ui/checkbox";
 import { type Finding, type Findings } from "../models/finding";
-import { getRandomNumberInRange } from "../utils/numbers";
-import { selectRandomObjects } from "../utils/objects";
-import { randomXrayFinding } from "../utils/strings";
 import axiosInstance from "../api/axiosInstance";
+import { useTranslation } from "react-i18next";
 
 const styles = {
   gap3: {
@@ -37,27 +35,6 @@ const styles = {
   },
 };
 
-const getFindings = (
-  isNormal: boolean,
-  quantityRange: [number, number],
-  generatedQuantityRange: [number, number]
-): Findings => {
-  let localFindings: Findings = [];
-  localFindings = localFindings.concat(
-    selectRandomObjects(
-      require(isNormal
-        ? "../fetches/fetchNormalFindings.json"
-        : "../fetches/fetchAbnormalFindings.json"),
-      getRandomNumberInRange(...quantityRange)
-    )
-  );
-
-  for (let i = 0; i < getRandomNumberInRange(...generatedQuantityRange); i++) {
-    localFindings = localFindings.concat(randomXrayFinding(isNormal));
-  }
-  return localFindings;
-};
-
 interface ReportFindingsProps {
   findings?: Findings;
   isNormal: boolean;
@@ -69,7 +46,9 @@ const ReportFindings = ({
   isNormal,
   editable,
 }: ReportFindingsProps): JSX.Element => {
-  const [findingsData, setFindingsData] = useState<Finding[]>(); //very explicit name just to separate from the orig var
+  const [findingsData, setFindingsData] = useState<Finding[]>(); //very explicit name mainly to separate from the orig var for easier review
+
+  const { i18n } = useTranslation();
 
   useEffect(() => {
     async function fetchFindings() {
@@ -77,7 +56,7 @@ const ReportFindings = ({
         const randomTemporaryId = 91;
         const urlSubPath = isNormal ? "normal" : "abnormal";
         const findings = await axiosInstance.get(
-          `/findings/${urlSubPath}/${randomTemporaryId}`
+          `/findings/${urlSubPath}/${randomTemporaryId}?lang=${i18n.language}`
         );
         setFindingsData(findings.data);
       } catch (error) {
@@ -86,7 +65,13 @@ const ReportFindings = ({
     }
 
     fetchFindings();
-  }, []);
+
+    i18n.on("languageChanged", fetchFindings);
+
+    return () => {
+      i18n.off("languageChanged", fetchFindings);
+    };
+  }, [i18n]); // Dependency on i18n instance
 
   // findings = findings ? findings : getFindings(isNormal, [0, 7], [0, 5]);
   //note: we disallowed the case of providing findings as a prop for now. we don't see any flow that uses it anyway as part of the tasks scope

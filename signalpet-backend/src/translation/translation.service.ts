@@ -3,6 +3,7 @@ import axios from 'axios';
 
 @Injectable()
 export class TranslationService {
+  //use environment variables
   private readonly apiUrl = 'http://localhost:5000/translate';
 
   async batchTranslate(
